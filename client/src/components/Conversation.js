@@ -8,7 +8,7 @@ function Conversation({ onComplete }) {
   const handleSend = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/conversation", {
+      const res = await axios.post("/api/conversation", {
         audioText: inputText,
       });
       onComplete(res.data);
@@ -18,28 +18,16 @@ function Conversation({ onComplete }) {
     setLoading(false);
   };
 
-  const startVoice = () => {
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.onresult = (event) => {
-      setInputText(event.results[0][0].transcript);
-    };
-    recognition.start();
-  };
-
   return (
     <div className="mt-4">
-      <h3>Voice Conversation</h3>
+      <h3>Simulated Voice Conversation</h3>
       <input
         type="text"
         className="form-control"
-        placeholder="Say something or type..."
+        placeholder="Say something (simulate voice input)..."
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <button className="btn btn-secondary mt-3 me-2" onClick={startVoice}>
-        🎤 Speak
-      </button>
       <button
         className="btn btn-success mt-3"
         onClick={handleSend}
